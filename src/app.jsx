@@ -3,6 +3,31 @@ import preactLogo from './assets/preact.svg'
 import viteLogo from '/vite.svg'
 import './app.css'
 
+import { HashRouter as Router, Routes, Route } from 'react-router-dom'
+import { lazy, Suspense, useState } from 'react';
+
+import 'animate.css';
+import './assets/css/index.scss'
+
+// import { About } from './pages/About'
+// import { RobotEdit } from './pages/RobotEdit'
+// import { RobotIndex } from './pages/RobotIndex'
+// import { RobotDetails } from './pages/RobotDetails'
+// import { AboutTeam } from './cmps/AboutTeam'
+// import { AboutVision } from './cmps/AboutVision'
+
+////////////////////////////////////////////////////
+
+// import { AppFooter } from './cmps/AppFooter'
+// import { AppHeader } from './cmps/AppHeader'
+// import { Home } from './pages/Home'
+// import { UserMsg } from './cmps/UserMsg'
+// import { DynamicModal } from './cmps/DynamicModal';
+// import { ThemeContext, ThemeProvider } from './contexts/ThemeContext';
+
+
+
+
 export function App() {
   const [count, setCount] = useState(0)
 
