@@ -1,33 +1,33 @@
 import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
 
-export const robotService = {
+export const toyService = {
     query,
     save,
     remove,
     getById,
-    createRobot,
+    createToy,
     getDefaultFilter,
     getFilterFromSearchParams
 }
 
-const STORAGE_KEY = 'robots'
+const STORAGE_KEY = 'toys'
 
-_createRobots()
+_createToys()
 
 async function query(filterBy) {
     try {
-        let robots = await storageService.query(STORAGE_KEY)
+        let toys = await storageService.query(STORAGE_KEY)
         if (filterBy) {
             let { minBatteryStatus, model = '', type = '' } = filterBy
             minBatteryStatus = minBatteryStatus || 0
-            robots = robots.filter(robot =>
-                robot.type.toLowerCase().includes(type.toLowerCase()) &&
-                robot.model.toLowerCase().includes(model.toLowerCase()) &&
-                robot.batteryStatus >= minBatteryStatus
+            toys = toys.filter(toy =>
+                toy.type.toLowerCase().includes(type.toLowerCase()) &&
+                toy.model.toLowerCase().includes(model.toLowerCase()) &&
+                toy.batteryStatus >= minBatteryStatus
             )
         }
-        return robots
+        return toys
     } catch (error) {
         console.log('error:', error)
         throw error
@@ -42,16 +42,16 @@ function remove(id) {
     return storageService.remove(STORAGE_KEY, id)
 }
 
-function save(robotToSave) {
-    if (robotToSave.id) {
-        return storageService.put(STORAGE_KEY, robotToSave)
+function save(toyToSave) {
+    if (toyToSave.id) {
+        return storageService.put(STORAGE_KEY, toyToSave)
     } else {
-        robotToSave.isOn = false
-        return storageService.post(STORAGE_KEY, robotToSave)
+        toyToSave.isOn = false
+        return storageService.post(STORAGE_KEY, toyToSave)
     }
 }
 
-function createRobot(model = '', type = '', batteryStatus = 100) {
+function createToy(model = '', type = '', batteryStatus = 100) {
     return {
         model,
         batteryStatus,
@@ -77,16 +77,16 @@ function getFilterFromSearchParams(searchParams) {
     return filterBy
 }
 
-function _createRobots() {
-    let robots = utilService.loadFromStorage(STORAGE_KEY)
-    if (!robots || !robots.length) {
-        robots = [
+function _createToys() {
+    let toys = utilService.loadFromStorage(STORAGE_KEY)
+    if (!toys || !toys.length) {
+        toys = [
             { id: 'r1', model: 'Dominique Sote', batteryStatus: 100, type: 'Pleasure' },
             { id: 'r2', model: 'Salad-O-Matic', batteryStatus: 80, type: 'Cooking' },
             { id: 'r3', model: 'Dusty', batteryStatus: 100, type: 'Cleaning' },
             { id: 'r4', model: 'DevTron', batteryStatus: 40, type: 'Office' }
         ]
-        utilService.saveToStorage(STORAGE_KEY, robots)
+        utilService.saveToStorage(STORAGE_KEY, toys)
     }
 }
 
