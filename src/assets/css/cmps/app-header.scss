@@ -1,7 +1,27 @@
 .app-header {
-    background: #e91e63;
+    background: #e66892;
     color: white;
+    position: relative; // Important for absolutely positioned children
+    padding-bottom: 2rem; // Space for bottom-aligned content if needed
 
+    .main-nav {
+        position: absolute;
+        bottom: 0.5rem;
+        right: 1rem;
+
+        a {
+            color: white;
+            text-decoration: none;
+
+            &:not(:last-child) {
+                margin-right: 10px;
+            }
+
+            &.active {
+                text-decoration: underline;
+            }
+        }
+    }
 }
 
 .app-header.dark {
