@@ -8,6 +8,7 @@ import { ToyEdit } from './pages/ToyEdit'
 import { ToyIndex } from './pages/ToyIndex'
 import { ToyDetails } from './pages/ToyDetails'
 import { Home } from './pages/Home'
+import { AppHeader } from './cmps/AppHeader'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
     return (
         <Router>
             <section className='main-app'>
+                <AppHeader />
                 <main className='container'>
                     <Routes>
                         <Route path="/" element={<Home />} />
