@@ -1,68 +1,32 @@
-import { useState } from 'preact/hooks'
-import preactLogo from './assets/preact.svg'
-import viteLogo from '/vite.svg'
-import './app.css'
-
 import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 import { lazy, Suspense, useState } from 'react';
 
 import 'animate.css';
 import './assets/css/index.scss'
 
-// import { About } from './pages/About'
-// import { RobotEdit } from './pages/RobotEdit'
-// import { RobotIndex } from './pages/RobotIndex'
-// import { RobotDetails } from './pages/RobotDetails'
-// import { AboutTeam } from './cmps/AboutTeam'
-// import { AboutVision } from './cmps/AboutVision'
+import { ToyEdit } from './pages/ToyEdit'
+import { ToyIndex } from './pages/ToyIndex'
+import { ToyDetails } from './pages/ToyDetails'
+import { Home } from './pages/Home'
 
-////////////////////////////////////////////////////
-
-// import { AppFooter } from './cmps/AppFooter'
-// import { AppHeader } from './cmps/AppHeader'
-// import { Home } from './pages/Home'
-// import { UserMsg } from './cmps/UserMsg'
-// import { DynamicModal } from './cmps/DynamicModal';
-// import { ThemeContext, ThemeProvider } from './contexts/ThemeContext';
+function App() {
 
 
-
-
-export function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} class="logo" alt="Vite logo" />
-        </a>
-        <a href="https://preactjs.com" target="_blank">
-          <img src={preactLogo} class="logo preact" alt="Preact logo" />
-        </a>
-      </div>
-      <h1>Vite + Preact</h1>
-      <div class="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/app.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p>
-        Check out{' '}
-        <a
-          href="https://preactjs.com/guide/v10/getting-started#create-a-vite-powered-preact-app"
-          target="_blank"
-        >
-          create-preact
-        </a>
-        , the official Preact + Vite starter
-      </p>
-      <p class="read-the-docs">
-        Click on the Vite and Preact logos to learn more
-      </p>
-    </>
-  )
+    return (
+        <Router>
+            <section className='main-app'>
+                <main className='container'>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/toy" element={<ToyIndex />} >
+                            <Route path='/toy/edit/:toyId?' element={<ToyEdit />} />
+                        </Route>
+                        <Route path="/toy/:toyId" element={<ToyDetails />} />
+                    </Routes>
+                </main>
+            </section>
+        </Router>
+    )
 }
+
+export default App

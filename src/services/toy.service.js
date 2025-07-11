@@ -15,6 +15,17 @@ const STORAGE_KEY = 'toys'
 
 _createToys()
 
+const labels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle','Outdoor', 'Battery Powered']
+
+const toy = {
+    _id: 't101',
+    name: 'Talking Doll',
+    price: 123,
+    labels: ['Doll', 'Battery Powered', 'Baby'],
+    createdAt: 1631031801011,
+    inStock: true,
+}
+
 async function query(filterBy) {
     try {
         let toys = await storageService.query(STORAGE_KEY)
