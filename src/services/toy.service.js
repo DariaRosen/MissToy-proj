@@ -8,14 +8,19 @@ export const toyService = {
     getById,
     createToy,
     getDefaultFilter,
-    getFilterFromSearchParams
+    getFilterFromSearchParams,
+    getToyLabels
 }
 
-const STORAGE_KEY = 'toys'
+const STORAGE_KEY = 'toysDB'
 
 _createToys()
 
-const labels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle','Outdoor', 'Battery Powered']
+const toyLabels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle', 'Outdoor', 'Battery Powered']
+
+export function getToyLabels() {
+    return toyLabels
+}
 
 const toy = {
     _id: 't101',
@@ -28,33 +33,32 @@ const toy = {
 
 async function query(filterBy) {
     try {
-        let toys = await storageService.query(STORAGE_KEY)
-        if (filterBy) {
-            let { minBatteryStatus, model = '', type = '' } = filterBy
-            minBatteryStatus = minBatteryStatus || 0
-            toys = toys.filter(toy =>
-                toy.type.toLowerCase().includes(type.toLowerCase()) &&
-                toy.model.toLowerCase().includes(model.toLowerCase()) &&
-                toy.batteryStatus >= minBatteryStatus
-            )
+        let toysDB = await storageService.query(STORAGE_KEY)
+        if (filterBy.sortBy) {
+            const sortKey = filterBy.sortBy
+            toysDB.sort((a, b) => {
+                if (sortKey === 'name') return a.name.localeCompare(b.name)
+                if (sortKey === 'price') return a.price - b.price
+                if (sortKey === 'createdAt') return b.createdAt - a.createdAt
+            })
         }
-        return toys
+        return toysDB
     } catch (error) {
         console.log('error:', error)
         throw error
     }
 }
 
-function getById(id) {
-    return storageService.get(STORAGE_KEY, id)
+function getById(_id) {
+    return storageService.get(STORAGE_KEY, _id)
 }
 
-function remove(id) {
-    return storageService.remove(STORAGE_KEY, id)
+function remove(_id) {
+    return storageService.remove(STORAGE_KEY, _id)
 }
 
 function save(toyToSave) {
-    if (toyToSave.id) {
+    if (toyToSave._id) {
         return storageService.put(STORAGE_KEY, toyToSave)
     } else {
         toyToSave.isOn = false
@@ -62,21 +66,28 @@ function save(toyToSave) {
     }
 }
 
-function createToy(model = '', type = '', batteryStatus = 100) {
+function createToy(name = '', price = 0, labels = []) {
     return {
-        model,
-        batteryStatus,
-        type
+        _id: utilService.makeId(),
+        name,
+        price,
+        labels,
+        createdAt: Date.now(),
+        inStock: true
     }
 }
 
+
 function getDefaultFilter() {
     return {
-        type: '',
-        minBatteryStatus: 0,
-        model: ''
+        txt: '',
+        inStock: null, // All, true, or false
+        labels: [],
+        sortBy: '',
+        maxPrice: 0
     }
 }
+
 
 
 function getFilterFromSearchParams(searchParams) {
@@ -90,12 +101,41 @@ function getFilterFromSearchParams(searchParams) {
 
 function _createToys() {
     let toys = utilService.loadFromStorage(STORAGE_KEY)
+
     if (!toys || !toys.length) {
         toys = [
-            { id: 'r1', model: 'Dominique Sote', batteryStatus: 100, type: 'Pleasure' },
-            { id: 'r2', model: 'Salad-O-Matic', batteryStatus: 80, type: 'Cooking' },
-            { id: 'r3', model: 'Dusty', batteryStatus: 100, type: 'Cleaning' },
-            { id: 'r4', model: 'DevTron', batteryStatus: 40, type: 'Office' }
+            {
+                _id: 't101',
+                name: 'Talking Doll',
+                price: 123,
+                labels: ['Doll', 'Battery Powered', 'Baby'],
+                createdAt: Date.now(),
+                inStock: true
+            },
+            {
+                _id: 't102',
+                name: 'Puzzle Mania',
+                price: 80,
+                labels: ['Puzzle', 'Box game'],
+                createdAt: Date.now(),
+                inStock: true
+            },
+            {
+                _id: 't103',
+                name: 'Art Attack Set',
+                price: 150,
+                labels: ['Art', 'Outdoor'],
+                createdAt: Date.now(),
+                inStock: false
+            },
+            {
+                _id: 't104',
+                name: 'Baby Car',
+                price: 200,
+                labels: ['On wheels', 'Baby'],
+                createdAt: Date.now(),
+                inStock: true
+            }
         ]
         utilService.saveToStorage(STORAGE_KEY, toys)
     }
