@@ -22,15 +22,6 @@ export function getToyLabels() {
     return toyLabels
 }
 
-const toy = {
-    _id: 't101',
-    name: 'Talking Doll',
-    price: 123,
-    labels: ['Doll', 'Battery Powered', 'Baby'],
-    createdAt: 1631031801011,
-    inStock: true,
-}
-
 async function query(filterBy) {
     try {
         let toysDB = await storageService.query(STORAGE_KEY)
@@ -67,15 +58,18 @@ function save(toyToSave) {
 }
 
 function createToy(name = '', price = 0, labels = []) {
+    const imgIdx = utilService.getRandomIntInclusive(1, 10)
     return {
         _id: utilService.makeId(),
         name,
         price,
         labels,
         createdAt: Date.now(),
-        inStock: true
+        inStock: true,
+        imgUrl: `/img/${imgIdx}.JPG`, // relative to public/
     }
 }
+
 
 
 function getDefaultFilter() {
@@ -110,7 +104,8 @@ function _createToys() {
                 price: 123,
                 labels: ['Doll', 'Battery Powered', 'Baby'],
                 createdAt: Date.now(),
-                inStock: true
+                inStock: true,
+                imgUrl: `/img/${utilService.getRandomIntInclusive(1, 10)}.JPG`
             },
             {
                 _id: 't102',
@@ -118,7 +113,8 @@ function _createToys() {
                 price: 80,
                 labels: ['Puzzle', 'Box game'],
                 createdAt: Date.now(),
-                inStock: true
+                inStock: true,
+                imgUrl: `/img/${utilService.getRandomIntInclusive(1, 10)}.JPG`
             },
             {
                 _id: 't103',
@@ -126,7 +122,8 @@ function _createToys() {
                 price: 150,
                 labels: ['Art', 'Outdoor'],
                 createdAt: Date.now(),
-                inStock: false
+                inStock: false ,
+                imgUrl: `/img/${utilService.getRandomIntInclusive(1, 10)}.JPG`
             },
             {
                 _id: 't104',
@@ -134,7 +131,8 @@ function _createToys() {
                 price: 200,
                 labels: ['On wheels', 'Baby'],
                 createdAt: Date.now(),
-                inStock: true
+                inStock: true,
+                imgUrl: `/img/${utilService.getRandomIntInclusive(1, 10)}.JPG`
             }
         ]
         utilService.saveToStorage(STORAGE_KEY, toys)

@@ -9,9 +9,9 @@ export function ToyList({ toys, onRemoveToy, onEditToy, addToToyt }) {
                     <ToyPreview toy={toy} />
                     <div>
                         <button onClick={() => onRemoveToy(toy._id)}>x</button>
-                        <button onClick={() => onEditToy(toy)}>Edit Prompt</button>
+                        {/* <button onClick={() => onEditToy(toy)}>Edit Prompt</button> */}
                     </div>
-                    <button className="buy" onClick={() => addToToyt(toy)}>Add to Toyt</button>
+                    {/* <button className="buy" onClick={() => addToToyt(toy)}>Add to Toyt</button> */}
                 </li>
             )}
         </ul>
