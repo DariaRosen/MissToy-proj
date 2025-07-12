@@ -67,6 +67,7 @@ export function ToyIndex() {
         <section className="toy-index">
             <hr />
             <h1>Welcome! this is our toys</h1>
+            <hr />
             <main>
                 <section>
                     {/* <button className='add-btn'><Link to={`/toy/edit`}>Edit Toy</Link></button> */}
@@ -74,7 +75,10 @@ export function ToyIndex() {
 
                     <button onClick={onAddToy}>Add Toy ⛐</button>
                 </section>
+                <hr />
                 <ToyFilter filterBy={filterBy} onSetFilter={onSetFilter} />
+                
+                <hr />
                 {!!toys
                     ? <ToyList
                         toys={toys}

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { debounce } from '../services/util.service'
-import { toyService } from '../services/toy.service.js'
+import { toyService } from '../services/toy.service' // make sure this is imported
 
 export function ToyFilter({ filterBy, onSetFilter }) {
     const toyLabels = toyService.getToyLabels()
@@ -18,22 +18,14 @@ export function ToyFilter({ filterBy, onSetFilter }) {
         setFilterByToEdit(prev => ({ ...prev, [field]: value }))
     }
 
+    // ✅ Define handleLabelSelect
+    function handleLabelSelect({ target }) {
+        const selectedOptions = [...target.selectedOptions].map(opt => opt.value)
+        setFilterByToEdit(prev => ({ ...prev, labels: selectedOptions }))
+    }
+
     return (
         <section className="toy-filter">
-            {/* <h2>Toy Filter</h2> */}
-            <label htmlFor="labels">Labels:</label>
-            <select
-                id="labels"
-                multiple
-                value={filterByToEdit.labels || []}
-                onChange={handleLabelSelect}
-            >
-                {labels.map(label => (
-                    <option key={label} value={label}>
-                        {label}
-                    </option>
-                ))}
-            </select>
             <form>
                 <label htmlFor="txt">Search by name:</label>
                 <input
@@ -54,20 +46,34 @@ export function ToyFilter({ filterBy, onSetFilter }) {
                     value={filterByToEdit.maxPrice || ''}
                     onChange={handleChange}
                 />
-            </form>
-            <label htmlFor="sortBy">Sort by:</label>
-            <select
-                id="sortBy"
-                name="sortBy"
-                value={filterByToEdit.sortBy}
-                onChange={handleChange}
-            >
-                <option value="">None</option>
-                <option value="name">Name</option>
-                <option value="price">Price</option>
-                <option value="createdAt">Created</option>
-            </select>
 
+                <label htmlFor="sortBy">Sort by:</label>
+                <select
+                    id="sortBy"
+                    name="sortBy"
+                    value={filterByToEdit.sortBy}
+                    onChange={handleChange}
+                >
+                    <option value="">None</option>
+                    <option value="name">Name</option>
+                    <option value="price">Price</option>
+                    <option value="createdAt">Created</option>
+                </select>
+
+                <label htmlFor="labels">Labels:</label>
+                <select
+                    id="labels"
+                    multiple
+                    value={filterByToEdit.labels || []}
+                    onChange={handleLabelSelect}
+                >
+                    {toyLabels.map(label => (
+                        <option key={label} value={label}>
+                            {label}
+                        </option>
+                    ))}
+                </select>
+            </form>
         </section>
     )
 }
