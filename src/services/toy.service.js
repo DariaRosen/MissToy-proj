@@ -10,7 +10,8 @@ export const toyService = {
     getDefaultFilter,
     getFilterFromSearchParams,
     getToyLabels,
-    getRandomToy
+    getRandomToy,
+    getEmptyToy
 }
 
 const STORAGE_KEY = 'toysDB'
@@ -42,6 +43,8 @@ async function query(filterBy) {
 }
 
 function getById(_id) {
+    console.log('getById', _id)
+    console.log('STORAGE_KEY', STORAGE_KEY)
     return storageService.get(STORAGE_KEY, _id)
 }
 
@@ -159,5 +162,14 @@ function getRandomToy() {
     }
 }
 
+export function getEmptyToy() {
+  return {
+    name: '',
+    price: 0,
+    imgUrl: '',
+    inStock: true,
+    labels: []
+  }
+}
 
 

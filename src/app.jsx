@@ -20,8 +20,8 @@ function App() {
                 <main className='container'>
                     <Routes>
                         <Route path="/" element={<Home />} />
-                        <Route path="/toy" element={<ToyIndex />} >
-                            <Route path='/toy/edit/:toyId?' element={<ToyEdit />} />
+                        <Route path="/toy" element={<ToyIndex />}>
+                            <Route path="edit/:toyId?" element={<ToyEdit />} />
                         </Route>
                         <Route path="/toy/:toyId" element={<ToyDetails />} />
                     </Routes>

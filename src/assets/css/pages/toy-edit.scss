@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    height: 400px;
+    height: 450px;
     aspect-ratio: 1;
     top: -10%;
     position: fixed;
@@ -39,6 +39,41 @@
 .toy-edit form button {
     width: 50%;
     margin-top: 40px;
+    align-self: center;
+    color: black;
+}
+
+.toy-edit .form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin-top: 40px;
+}
+
+.toy-edit .form-actions button,
+.toy-edit .form-actions .btn {
+    flex: 1;
+    text-align: center;
+    padding: 0.5em 1em;
+    color: black;
+    background-color: #98a3b4;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font: inherit;
+    text-decoration: none; /* ensures Link looks like a button */
+    display: inline-block;
+    max-width: 200px;
+}
+
+.toy-edit .form-actions .btn:hover,
+.toy-edit .form-actions button:hover {
+    background-color: #657ec9;
+}
+
+.toy-edit form button {
+    width: 50%;
+    margin-top: 0px;
     align-self: center;
     color: black;
 }

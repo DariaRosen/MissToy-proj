@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { loadToys, removeToy, setFilterBy, saveToy } from "../store/toy/toy.actions";
 import { toyService } from "../services/toy.service";
 
+
 export function ToyIndex() {
 
     const toys = useSelector(storeState => storeState.toyModule.toys)

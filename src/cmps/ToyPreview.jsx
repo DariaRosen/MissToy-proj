@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
 
 export function ToyPreview({ toy }) {
+    console.log('111111111111');
+    
     return (
         <article className="toy-preview">
             <h4>{toy.vendor}</h4>
