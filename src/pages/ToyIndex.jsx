@@ -4,7 +4,7 @@ import { ToyList } from "../cmps/ToyList";
 import { ToyFilter } from "../cmps/ToyFilter";
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
 import { useSelector } from "react-redux";
-import { loadToys, removeToy, setFilterBy } from "../store/toy/toy.actions";
+import { loadToys, removeToy, setFilterBy, saveToy } from "../store/toy/toy.actions";
 import { toyService } from "../services/toy.service";
 
 export function ToyIndex() {
@@ -43,17 +43,16 @@ export function ToyIndex() {
     }
 
     function onAddToy() {
-        // const toyToSave = toyService.getRandomToy()
-
-        // // TODO: move to a function and use dispatch/action
-        // saveToy(toyToSave)
-        //     .then((savedToy) => {
-        //         showSuccessMsg(`Toy added (id: ${savedToy._id})`)
-        //     })
-        //     .catch(err => {
-        //         showErrorMsg('Cannot add toy')
-        //     })
-        showSuccessMsg('Toy added successfully!')
+        const toyToSave = toyService.getRandomToy()
+        console.log('toyToSave', toyToSave)
+        // TODO: move to a function and use dispatch/action
+        saveToy(toyToSave)
+            .then((savedToy) => {
+                showSuccessMsg(`Toy added (id: ${savedToy._id})`)
+            })
+            .catch(err => {
+                showErrorMsg('Cannot add toy')
+            })
     }
 
     function onEditToy() {
@@ -71,13 +70,11 @@ export function ToyIndex() {
             <main>
                 <section>
                     {/* <button className='add-btn'><Link to={`/toy/edit`}>Edit Toy</Link></button> */}
-                    <button onClick={onEditToy}>Edit Toy</button>
-
-                    <button onClick={onAddToy}>Add Toy ⛐</button>
+                    <button onClick={onAddToy}>Add New Toy </button>
                 </section>
                 <hr />
                 <ToyFilter filterBy={filterBy} onSetFilter={onSetFilter} />
-                
+
                 <hr />
                 {!!toys
                     ? <ToyList

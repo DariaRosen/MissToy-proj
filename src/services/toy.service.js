@@ -9,7 +9,8 @@ export const toyService = {
     createToy,
     getDefaultFilter,
     getFilterFromSearchParams,
-    getToyLabels
+    getToyLabels,
+    getRandomToy
 }
 
 const STORAGE_KEY = 'toysDB'
@@ -35,7 +36,7 @@ async function query(filterBy) {
         }
         return toysDB
     } catch (error) {
-        console.log('error:', error)
+        console.log('error in query:', error)
         throw error
     }
 }
@@ -139,6 +140,24 @@ function _createToys() {
     }
 }
 
+function getRandomToy() {
+    const randomNames = ['Buzz Lightyear', 'Rubik\'s Cube', 'Lego Car', 'Plush Bunny', 'Magic Marker']
+    const randomLabels = toyLabels
+    const name = utilService.getRandomToyName(randomNames)
+    const price = utilService.getRandomIntInclusive(10, 300)
+    const labels = utilService.getRandomItems(randomLabels, utilService.getRandomIntInclusive(1, 3))
+    const imgUrl = `/img/${utilService.getRandomIntInclusive(1, 10)}.JPG`
+
+    return {
+        _id: utilService.makeId(),
+        name,
+        price,
+        labels,
+        imgUrl,
+        createdAt: Date.now(),
+        inStock: Math.random() > 0.3
+    }
+}
 
 
 

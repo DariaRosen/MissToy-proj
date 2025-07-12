@@ -5,7 +5,9 @@ export const utilService = {
     loadFromStorage,
     debounce,
     animateCSS,
-    getRandomIntInclusive
+    getRandomIntInclusive,
+    getRandomToyName,
+    getRandomItems,
 }
 
 function makeId(length = 5) {
@@ -75,4 +77,11 @@ export function getRandomIntInclusive(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min; // The maximum is inclusive and the minimum is inclusive
 }
 
+export function getRandomToyName(arr) {
+    return arr[Math.floor(Math.random() * arr.length)]
+}
 
+export function getRandomItems(arr, count) {
+    const shuffled = arr.slice().sort(() => 0.5 - Math.random())
+    return shuffled.slice(0, count)
+}

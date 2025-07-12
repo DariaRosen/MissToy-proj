@@ -18,7 +18,6 @@ export function ToyFilter({ filterBy, onSetFilter }) {
         setFilterByToEdit(prev => ({ ...prev, [field]: value }))
     }
 
-    // ✅ Define handleLabelSelect
     function handleLabelSelect({ target }) {
         const selectedOptions = [...target.selectedOptions].map(opt => opt.value)
         setFilterByToEdit(prev => ({ ...prev, labels: selectedOptions }))
