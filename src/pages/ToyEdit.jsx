@@ -33,8 +33,11 @@ export function ToyEdit() {
     }
 
     function onSaveToy(ev) {
+        
+        
         ev.preventDefault()
         if (!toyToEdit.price) toyToEdit.price = 100
+        console.log('toyToEdit', toyToEdit);
         saveToy(toyToEdit)
             .then(() => {
                 showSuccessMsg('Toy Saved!')

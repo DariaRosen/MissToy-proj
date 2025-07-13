@@ -6,10 +6,11 @@ export function ToyFilter({ filterBy, onSetFilter }) {
     const toyLabels = toyService.getToyLabels()
 
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
-    onSetFilter = useRef(debounce(onSetFilter)).current
+    const debouncedSetFilter = useRef(debounce(onSetFilter)).current
 
     useEffect(() => {
-        onSetFilter(filterByToEdit)
+        debouncedSetFilter(filterByToEdit)
+        console.log('333333333')
     }, [filterByToEdit])
 
     function handleChange({ target }) {
@@ -26,13 +27,13 @@ export function ToyFilter({ filterBy, onSetFilter }) {
     return (
         <section className="toy-filter">
             <form>
-                <label htmlFor="txt">Search by name:</label>
+                <label htmlFor="name">Search by name:</label>
                 <input
                     type="text"
-                    id="txt"
-                    name="txt"
+                    id="name"
+                    name="name"
                     placeholder="Search toys..."
-                    value={filterByToEdit.txt || ''}
+                    value={filterByToEdit.name || ''}
                     onChange={handleChange}
                 />
 

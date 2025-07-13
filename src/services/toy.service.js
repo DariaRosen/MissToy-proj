@@ -24,9 +24,21 @@ export function getToyLabels() {
     return toyLabels
 }
 
-async function query(filterBy) {
+async function query(filterBy = {}) {
     try {
         let toysDB = await storageService.query(STORAGE_KEY)
+        console.log('111111111 filterBy:', filterBy)
+        if (filterBy.name) {
+            const regex = new RegExp(filterBy.name, 'i')
+            toysDB = toysDB.filter(toy => regex.test(toy.name))
+        }
+
+        if (filterBy.maxPrice) {
+            console.log('22222222')
+
+            toysDB = toysDB.filter(toy => toy.price <= filterBy.maxPrice)
+        }
+
         if (filterBy.sortBy) {
             const sortKey = filterBy.sortBy
             toysDB.sort((a, b) => {
@@ -35,12 +47,14 @@ async function query(filterBy) {
                 if (sortKey === 'createdAt') return b.createdAt - a.createdAt
             })
         }
+
         return toysDB
     } catch (error) {
         console.log('error in query:', error)
         throw error
     }
 }
+
 
 function getById(_id) {
     console.log('getById', _id)
@@ -126,7 +140,7 @@ function _createToys() {
                 price: 150,
                 labels: ['Art', 'Outdoor'],
                 createdAt: Date.now(),
-                inStock: false ,
+                inStock: false,
                 imgUrl: `/img/${utilService.getRandomIntInclusive(1, 10)}.JPG`
             },
             {
@@ -163,13 +177,13 @@ function getRandomToy() {
 }
 
 export function getEmptyToy() {
-  return {
-    name: '',
-    price: 0,
-    imgUrl: '',
-    inStock: true,
-    labels: []
-  }
+    return {
+        name: '',
+        price: 0,
+        imgUrl: '',
+        inStock: true,
+        labels: []
+    }
 }
 
 

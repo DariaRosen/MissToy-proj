@@ -4,10 +4,8 @@ import { store } from "../store";
 import { ADD_TOY, EDIT_TOY, INCREASE_COUNTER, REMOVE_TOY, SET_FILTER, SET_IS_LOADING, SET_TOYS, UNDO_CHANGES } from "./toy.reducer";
 
 
-export async function loadToys() {
-
+export async function loadToys(filterBy = store.getState().toyModule.filterBy) {
     try {
-        const filterBy = store.getState().toyModule.filterBy
         const toys = await toyService.query(filterBy)
         store.dispatch({ type: SET_TOYS, toys })
     } catch (err) {
@@ -39,8 +37,11 @@ export async function removeToyOptimistic(toyId) {
 }
 
 export async function saveToy(toyToSave) {
+    console.log('Saving toy:', toyToSave)
     try {
-        const type = toyToSave.id ? EDIT_TOY : ADD_TOY
+        const type = toyToSave._id ? EDIT_TOY : ADD_TOY
+        console.log('Saving toy with type:', type);
+
         const toy = await toyService.save(toyToSave)
         store.dispatch({ type, toy })
         return toy
