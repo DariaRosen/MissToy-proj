@@ -11,8 +11,6 @@ import { toyService } from "../services/toy.service";
 export function ToyIndex() {
 
     const toys = useSelector(storeState => storeState.toyModule.toys)
-    // const filterBy = useSelector(storeState => storeState.toyModule.filterBy)
-
     const [filterBy, setFilterBy] = useState(toyService.getDefaultFilter())
 
     useEffect(() => {
@@ -45,8 +43,6 @@ export function ToyIndex() {
 
     function onAddToy() {
         const toyToSave = toyService.getRandomToy()
-        console.log('toyToSave', toyToSave)
-        // TODO: move to a function and use dispatch/action
         saveToy(toyToSave)
             .then((savedToy) => {
                 showSuccessMsg(`Toy added (id: ${savedToy._id})`)

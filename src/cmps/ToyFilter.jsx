@@ -10,7 +10,6 @@ export function ToyFilter({ filterBy, onSetFilter }) {
 
     useEffect(() => {
         debouncedSetFilter(filterByToEdit)
-        console.log('333333333')
     }, [filterByToEdit])
 
     function handleChange({ target }) {

@@ -27,14 +27,12 @@ export function getToyLabels() {
 async function query(filterBy = {}) {
     try {
         let toysDB = await storageService.query(STORAGE_KEY)
-        console.log('111111111 filterBy:', filterBy)
         if (filterBy.name) {
             const regex = new RegExp(filterBy.name, 'i')
             toysDB = toysDB.filter(toy => regex.test(toy.name))
         }
 
         if (filterBy.maxPrice) {
-            console.log('22222222')
 
             toysDB = toysDB.filter(toy => toy.price <= filterBy.maxPrice)
         }
@@ -44,7 +42,6 @@ async function query(filterBy = {}) {
                 toy.labels?.some(label => filterBy.labels.includes(label))
             )
         }
-
 
         if (filterBy.sortBy) {
             const sortKey = filterBy.sortBy
