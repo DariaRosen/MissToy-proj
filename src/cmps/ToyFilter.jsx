@@ -68,9 +68,7 @@ export function ToyFilter({ filterBy, onSetFilter }) {
                     onChange={handleLabelSelect}
                 >
                     {toyLabels.map(label => (
-                        <option key={label} value={label}>
-                            {label}
-                        </option>
+                        <option key={label} value={label}>{label}</option>
                     ))}
                 </select>
             </form>

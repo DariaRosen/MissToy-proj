@@ -39,6 +39,13 @@ async function query(filterBy = {}) {
             toysDB = toysDB.filter(toy => toy.price <= filterBy.maxPrice)
         }
 
+        if (filterBy.labels?.length) {
+            toysDB = toysDB.filter(toy =>
+                toy.labels?.some(label => filterBy.labels.includes(label))
+            )
+        }
+
+
         if (filterBy.sortBy) {
             const sortKey = filterBy.sortBy
             toysDB.sort((a, b) => {
